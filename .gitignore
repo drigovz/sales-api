@@ -1,6 +1,12 @@
+### My preferences ###
+build/
+temp/
+uploads/*
+!uploads/.gitkeep
 
-# Created by https://www.toptal.com/developers/gitignore/api/node,react,reactnative
-# Edit at https://www.toptal.com/developers/gitignore?templates=node,react,reactnative
+### vs code paths ###
+.idea/
+.vscode/
 
 ### Node ###
 # Logs
