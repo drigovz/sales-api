@@ -3,6 +3,7 @@ build/
 temp/
 uploads/*
 !uploads/.gitkeep
+README.md.backup
 
 ### vs code paths ###
 .idea/
