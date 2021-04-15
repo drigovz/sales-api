@@ -6,4 +6,4 @@ API with Node.js and Typescript for management sales transactions
 * TS-node-dev
 * Eslint
 * Prettier
-* base-alias 
+* base-alias

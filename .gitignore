@@ -4,6 +4,7 @@ temp/
 uploads/*
 !uploads/.gitkeep
 README.md.backup
+docker-compose.yaml
 
 ### vs code paths ###
 .idea/
