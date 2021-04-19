@@ -1,8 +1,14 @@
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
-import IRequest from '../interfaces/IRequest';
 import Product from '../typeorm/entities/Product';
 import { ProductsRepository } from '../typeorm/repositories/ProductsRepository';
+
+interface IRequest {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+}
 
 class UpdateProductService {
   public async execute({ id, name, price, quantity }: IRequest): Promise<Product> {
