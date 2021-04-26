@@ -2,7 +2,8 @@ import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import User from '../typeorm/entities/User';
 import UsersRepository from '../typeorm/repositories/UsersRepository';
-import { compare, hash } from 'bcryptjs';
+import { compare } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
 
 interface IRequest {
   email: string;
@@ -11,6 +12,7 @@ interface IRequest {
 
 interface IResponse {
   user: User;
+  token: string;
 }
 
 class CreateSessionService {
@@ -26,7 +28,17 @@ class CreateSessionService {
       throw new AppError('Incorrect password combination!', 401);
     }
 
-    return user;
+    const secret: string = process.env.TOKEN_SECRET as string;
+
+    const token = sign({}, secret, {
+      subject: user.id,
+      expiresIn: '3d',
+    });
+
+    return {
+      user,
+      token,
+    };
   }
 }
 
