@@ -3,6 +3,12 @@ import { verify } from 'jsonwebtoken';
 import AppError from '@shared/errors/AppError';
 import authConfig from '@config/authConfig';
 
+interface IPayloadToken {
+  iat: number;
+  exp: number;
+  sub: string;
+}
+
 export default function isAuthenticated(req: Request, res: Response, next: NextFunction): void {
   const authHeader = req.headers.authorization;
   if (!authHeader) {
@@ -13,7 +19,13 @@ export default function isAuthenticated(req: Request, res: Response, next: NextF
   const [, token] = authHeader.split(' ');
 
   try {
-    const decodeToken = verify(token, authConfig.jwt.secret);
+    const payloadToken = verify(token, authConfig.jwt.secret);
+    const { sub } = payloadToken as IPayloadToken;
+
+    req.user = {
+      id: sub,
+    };
+
     return next();
   } catch {
     throw new AppError('Invalid JWT Token!', 401);
