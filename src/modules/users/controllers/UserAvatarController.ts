@@ -10,7 +10,7 @@ class UserAvatarController {
       avatarFileName: req.file.filename,
     });
 
-    return res.json(user);
+    return res.json({ avatar: user.avatar, message: 'Avatar updated successfull!' });
   }
 }
 
