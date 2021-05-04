@@ -8,3 +8,4 @@ API with Node.js and Typescript for management sales transactions
 * Prettier
 * base-alias
 * Custom errors validation with Celebrate
+* Multer
