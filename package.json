@@ -19,6 +19,17 @@
     "npm": "You must run Yarn in this project!",
     "yarn": "^1.22.10"
   },
+  "lint-staged": {
+    "./src/**/*.{ts, js, jsx, tsx}": [
+      "yarn lint",
+      "yarn lint-fix"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.10",
@@ -32,6 +43,8 @@
     "eslint": "^7.24.0",
     "eslint-config-prettier": "6.15.0",
     "eslint-plugin-prettier": "3.2.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
     "prettier": "^2.2.1",
     "ts-node-dev": "^1.1.6",
     "tsconfig-paths": "^3.9.0",

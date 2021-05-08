@@ -8,8 +8,8 @@ const routes = Router();
 
 routes.use('/products', productRouter);
 routes.use('/users', usersRouter);
-routes.use('/password', passwordRouter);
 routes.use('/sessions', sessionsRouter);
+routes.use('/password', passwordRouter);
 
 routes.get('/', (req, res) => {
   return res.json({ message: 'Server is running!' });
