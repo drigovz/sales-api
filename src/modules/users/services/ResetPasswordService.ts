@@ -4,6 +4,7 @@ import UsersRepository from '../typeorm/repositories/UsersRepository';
 import UserTokensRepository from '../typeorm/repositories/UserTokensRepository';
 import { isAfter, addHours } from 'date-fns';
 import { hash } from 'bcryptjs';
+import { SHARE_ENV } from 'node:worker_threads';
 
 interface IRequest {
   password: string;
@@ -32,6 +33,8 @@ class ResetPasswordService {
     }
 
     user.password = await hash(password, 8);
+
+    await usersRepository.save(user);
   }
 }
 
