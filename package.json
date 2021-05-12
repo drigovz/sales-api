@@ -14,9 +14,10 @@
     "lint-fix": "eslint . --ext .ts --fix",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
   },
+  "engineStrict": true,
   "engines": {
     "node": "^14.16.0",
-    "npm": "You must run Yarn in this project!",
+    "npm": "You must run Yarn on this project!",
     "yarn": "^1.22.10"
   },
   "lint-staged": {
