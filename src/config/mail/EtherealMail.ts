@@ -1,13 +1,31 @@
 import nodemailer from 'nodemailer';
+import HandlebarsMailTemplate from './HandlebarsMailTemplate';
+
+interface IMailContact {
+  name: string;
+  email: string;
+}
+
+interface ITemplateVariables {
+  [key: string]: string | number;
+}
+
+interface IParserMailTemplate {
+  template: string;
+  variables: ITemplateVariables;
+}
 
 interface ISendMail {
-  to: string;
-  body: string;
+  to: IMailContact;
+  from?: IMailContact;
+  subject: string;
+  templateData: IParserMailTemplate;
 }
 
 class EtherealMail {
-  static async sendMail({ to, body }: ISendMail): Promise<void> {
+  static async sendMail({ to, from, subject, templateData }: ISendMail): Promise<void> {
     const account = await nodemailer.createTestAccount();
+    const mailTemplate = new HandlebarsMailTemplate();
 
     const transport = nodemailer.createTransport({
       host: account.smtp.host,
@@ -20,10 +38,16 @@ class EtherealMail {
     });
 
     const message = await transport.sendMail({
-      from: process.env.MAIL_FROM,
-      to,
-      subject: 'Reset your password',
-      text: body,
+      from: {
+        name: from?.name || 'team@salesapi.com.br',
+        address: from?.email || 'Suport of Sales API',
+      },
+      to: {
+        name: to.name,
+        address: to.email,
+      },
+      subject,
+      html: await mailTemplate.parser(templateData),
     });
 
     console.log(`\nMessage Id: ${message.messageId}`);
