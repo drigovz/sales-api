@@ -1,3 +1,4 @@
+import AppError from '@shared/errors/AppError';
 import nodemailer from 'nodemailer';
 import HandlebarsMailTemplate from './HandlebarsMailTemplate';
 
@@ -37,21 +38,25 @@ class EtherealMail {
       },
     });
 
-    const message = await transport.sendMail({
-      from: {
-        name: from?.name || 'Support of Sales API',
-        address: from?.email || 'team@salesapi.com.br',
-      },
-      to: {
-        name: to.name,
-        address: to.email,
-      },
-      subject,
-      html: await mailTemplate.parser(templateData),
-    });
+    try {
+      const message = await transport.sendMail({
+        from: {
+          name: from?.name || 'Support of Sales API',
+          address: from?.email || 'team@salesapi.com.br',
+        },
+        to: {
+          name: to.name,
+          address: to.email,
+        },
+        subject,
+        html: await mailTemplate.parser(templateData),
+      });
 
-    console.log(`\nMessage Id: ${message.messageId}`);
-    console.log(`\nPreview URL: ${nodemailer.getTestMessageUrl(message)}`);
+      console.log(`\nMessage Id: ${message.messageId}`);
+      console.log(`\nPreview URL: ${nodemailer.getTestMessageUrl(message)}`);
+    } catch (error) {
+      throw new AppError(`Error when try to send mail:\n ${error}`, 501);
+    }
   }
 }
 
