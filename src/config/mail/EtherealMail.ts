@@ -39,8 +39,8 @@ class EtherealMail {
 
     const message = await transport.sendMail({
       from: {
-        name: from?.name || 'team@salesapi.com.br',
-        address: from?.email || 'Suport of Sales API',
+        name: from?.name || 'Support of Sales API',
+        address: from?.email || 'team@salesapi.com.br',
       },
       to: {
         name: to.name,
