@@ -8,6 +8,18 @@
     "email": "rodrigodp2014@gmail.com",
     "url": "https://github.com/drigovz"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "./src/**/*.{ts, js, jsx, tsx}": [
+      "yarn lint-fix",
+      "yarn lint",
+      "git add ."
+    ]
+  },
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/http/server.ts",
     "lint": "eslint . --ext .ts",
@@ -19,17 +31,6 @@
     "node": "^14.16.0",
     "npm": "You must run Yarn on this project!",
     "yarn": "^1.22.10"
-  },
-  "lint-staged": {
-    "./src/**/*.{ts, js, jsx, tsx}": [
-      "yarn lint",
-      "yarn lint-fix"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
