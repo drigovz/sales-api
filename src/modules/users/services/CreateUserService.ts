@@ -1,4 +1,4 @@
-import AppError from "@shared/errors/AppError"
+import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import User from '../typeorm/entities/User';
 import UsersRepository from '../typeorm/repositories/UsersRepository';
@@ -26,9 +26,9 @@ class CreateUserService {
       password: hashedPassword,
     });
 
-    await usersRepository.save(user)
+    await usersRepository.save(user);
 
-    return user
+    return user;
   }
 }
 
