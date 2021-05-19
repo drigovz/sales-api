@@ -67,7 +67,11 @@ class CreateOrderService {
       quantity: existsProducts.filter(p => p.id === product.product_id)[0].quantity - product.quantity,
     }));
 
-    await productsRepository.save(updatedProductQuantity);
+    try {
+      await productsRepository.save(updatedProductQuantity);
+    } catch (error) {
+      throw new AppError(`Error when try to register new order: \n ${error}`);
+    }
 
     return order;
   }
