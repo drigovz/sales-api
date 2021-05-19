@@ -7,7 +7,6 @@ import OrdersRepository from '../typeorm/repositories/OrdersRepository';
 
 interface IProduct {
   id: string;
-  price: number;
   quantity: number;
 }
 
@@ -61,13 +60,13 @@ class CreateOrderService {
 
     const { order_products } = order;
 
-    // update quantity of products
-    const updatedProductQuantity = order_products.map(product => ({
-      id: product.id,
-      quantity: existsProducts.filter(p => p.id === product.product_id)[0].quantity - product.quantity,
-    }));
-
     try {
+      // update quantity of products
+      const updatedProductQuantity = order_products.map(product => ({
+        id: product.product_id,
+        quantity: existsProducts.filter(p => p.id === product.product_id)[0].quantity - product.quantity,
+      }));
+
       await productsRepository.save(updatedProductQuantity);
     } catch (error) {
       throw new AppError(`Error when try to register new order: \n ${error}`);
