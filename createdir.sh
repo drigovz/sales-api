@@ -4,7 +4,7 @@ userLogged=$USER
 
 if [ -d "/home/$USER/Dev/redisdb" ]
 then
-    echo "Directory /home/drigolx/Dev/redisdb exists."
+    echo "Directory /home/$userLogged/Dev/redisdb exists."
     sudo chown -R $userLogged /home/$userLogged/Dev/redisdb
 else
     echo "Creating directory... "
