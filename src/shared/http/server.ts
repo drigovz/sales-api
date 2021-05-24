@@ -9,10 +9,12 @@ import routes from './routes';
 import AppError from '@shared/errors/AppError';
 import '@shared/typeorm';
 import uploadConfig from '@config/upload';
+import rateLimiter from '@shared/http/middlewares/rateLimiter';
 
 const port = '3333' || process.env.PORT;
 
 const app = express();
+app.use(rateLimiter);
 app.use(cors());
 app.use(express.json());
 app.use(pagination);
