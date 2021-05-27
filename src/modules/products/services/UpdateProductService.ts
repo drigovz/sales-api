@@ -1,18 +1,12 @@
 import RedisCache from '@shared/cache/RedisCache';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
+import { IUpdateProduct } from '../domain/models/IUpdateProduct';
 import Product from '../infra/typeorm/entities/Product';
 import { ProductsRepository } from '../infra/typeorm/repositories/ProductsRepository';
 
-interface IRequest {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-}
-
 class UpdateProductService {
-  public async execute({ id, name, price, quantity }: IRequest): Promise<Product> {
+  public async execute({ id, name, price, quantity }: IUpdateProduct): Promise<Product> {
     const productRepository = getCustomRepository(ProductsRepository);
     const product = await productRepository.findOne(id);
     if (!product) {
@@ -20,7 +14,7 @@ class UpdateProductService {
     }
 
     const productExists = await productRepository.findByName(name);
-    if (productExists) {
+    if (productExists?.name !== name) {
       throw new AppError('There is already one product with this name!');
     }
 

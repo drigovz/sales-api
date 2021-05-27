@@ -3,17 +3,10 @@ import { getCustomRepository } from 'typeorm';
 import User from '../infra/typeorm/entities/User';
 import UsersRepository from '../infra/typeorm/repositories/UsersRepository';
 import { compare, hash } from 'bcryptjs';
-
-interface IRequest {
-  id: string;
-  name: string;
-  email: string;
-  password?: string;
-  old_password?: string;
-}
+import { IUpdateUser } from '../domain/models/IUpdateUser';
 
 class UpdateProfileService {
-  public async execute({ id, name, email, password, old_password }: IRequest): Promise<User> {
+  public async execute({ id, name, email, password, old_password }: IUpdateUser): Promise<User> {
     const usersRepository = getCustomRepository(UsersRepository);
 
     const user = await usersRepository.findById(id);
