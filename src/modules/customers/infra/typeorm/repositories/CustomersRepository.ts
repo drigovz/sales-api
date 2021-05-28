@@ -50,4 +50,8 @@ export default class CustomersRepository implements ICustomersRepository {
 
     return customer;
   }
+
+  public async remove(customer: Customer): Promise<void> {
+    await this.ormRepository.remove(customer);
+  }
 }
