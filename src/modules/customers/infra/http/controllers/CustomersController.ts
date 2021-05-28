@@ -8,7 +8,7 @@ import UpdateCustomerService from '@modules/customers/services/UpdateCustomerSer
 
 class CustomerController {
   public async index(req: Request, res: Response): Promise<Response> {
-    const listCustomers = new ListCustomerService();
+    const listCustomers = container.resolve(ListCustomerService);
     const customers = await listCustomers.execute();
     return res.json(customers);
   }
