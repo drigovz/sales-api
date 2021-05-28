@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import CreateCustomerService from '../../../services/CreateCustomerService';
-import DeleteCustomerService from '../../../services/DeleteCustomerService';
-import ListCustomerService from '../../../services/ListCustomerService';
-import ShowCustomerService from '../../../services/ShowCustomerService';
-import UpdateCustomerService from '../../../services/UpdateCustomerService';
+import CreateCustomerService from '@modules/customers/services/CreateCustomerService';
+import DeleteCustomerService from '@modules/customers/services/DeleteCustomerService';
+import ListCustomerService from '@modules/customers/services/ListCustomerService';
+import ShowCustomerService from '@modules/customers/services/ShowCustomerService';
+import UpdateCustomerService from '@modules/customers/services/UpdateCustomerService';
 
 class CustomerController {
   public async index(req: Request, res: Response): Promise<Response> {
-    const listCustomers = new ListCustomerService();
+    const listCustomers = container.resolve(ListCustomerService);
     const customers = await listCustomers.execute();
     return res.json(customers);
   }
@@ -43,7 +43,7 @@ class CustomerController {
 
   public async delete(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const deleteCustomer = new DeleteCustomerService();
+    const deleteCustomer = container.resolve(DeleteCustomerService);
 
     await deleteCustomer.execute({ id });
 
